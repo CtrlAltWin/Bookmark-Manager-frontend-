@@ -2,7 +2,7 @@ import React from "react";
 
 const CardB = () => {
   return (
-    <div className="shadow-lg rounded-lg bg-white border border-gray-200 p-2">
+    <div className="hover:shadow-lg ease-in duration-250 rounded-lg bg-white border border-gray-200 p-2">
       <div className="text-start font-semibold py-2 px-3">Categories</div>
       <div className="text-gray-600">
         <div className="flex justify-between py-3 px-5">

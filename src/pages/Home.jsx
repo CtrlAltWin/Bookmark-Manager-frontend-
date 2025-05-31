@@ -6,14 +6,12 @@ import Logo from "../components/Logo";
 const Home = () => {
   return (
     <div>
-      {/* Sections in home, each taking some background and have some texts */}
       <div className="bg-gradient-to-b from-white to-violet-200 px-2">
-        {/* I found that text are not taking full width */}
         <div className="max-w-[700px] m-auto text-center mt-16">
-          <h1 className="text-4xl md:text-5xl font-bold">
+          <h1 className="text-4xl sm:text-5xl font-bold">
             Organize your web, simply and beautifully
           </h1>
-          <p className="text-xl mt-5 mx-1">
+          <p className="text-lg sm:text-xl mt-5 mx-1">
             BookmarkHub helps you save and organize your favorite websites,
             articles, and resources all in one place.
           </p>
@@ -24,13 +22,12 @@ const Home = () => {
       </div>
       {/* second section */}
       <div className="px-2">
-        {/* I found that text are not taking full width */}
         <div className="max-w-[700px] m-auto text-center mt-16">
           <h1 className="text-3xl font-bold">
             Everything you need to organize your bookmarks
           </h1>
         </div>
-        {/* div for cards ---> it will be a grid */}
+
         <div className="max-w-[1300px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 mb-14">
           <FeatureCard
             title={"Save Bookmarks"}
@@ -54,7 +51,6 @@ const Home = () => {
       </div>
       {/* third section */}
       <div className="bg-gray-50 py-16 px-2">
-        {/* I found that text are not taking full width */}
         <div className="max-w-[920px] mx-auto text-center">
           <h1 className="text-3xl font-bold">How it works</h1>
           {/* grid */}
@@ -81,9 +77,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* forth section */}
+
       <div className="bg-violet-400 text-white py-16 px-2">
-        {/* I found that text are not taking full width */}
         <div className="max-w-[700px] m-auto text-center">
           <h1 className="text-3xl font-bold">
             Start organizing your bookmarks today
@@ -97,7 +92,7 @@ const Home = () => {
           </button>
         </div>
       </div>
-      {/* fifth section-footer */}
+
       <div className="bg-slate-900 grid grid-cols-1 md:grid-cols-2 py-8 px-6 space-y-2 md:space-y-0">
         <div className="flex justify-center md:justify-start">
           <Logo />

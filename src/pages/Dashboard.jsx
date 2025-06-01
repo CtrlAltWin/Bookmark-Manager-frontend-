@@ -24,7 +24,10 @@ const Dashboard = () => {
           ></input>
         </div>
         <div className="flex justify-end pb-4">
-          <button className="h-10 w-full md:w-40 rounded bg-violet-400 text-white">
+          <button
+            className="h-10 w-full md:w-40 rounded bg-violet-400 text-white"
+            onClick={() => setShowModal(true)}
+          >
             + Add Bookmark
           </button>
         </div>
@@ -48,11 +51,14 @@ const Dashboard = () => {
           />
         </div>
 
-        <BookmarkContainer />
+        <BookmarkContainer showBookmarkForm={() => setShowModal(true)} />
       </div>
 
       {showModal && (
-        <Modal Children={BookmarkForm} onClose={() => setShowModal(false)} />
+        <Modal
+          Children={BookmarkForm}
+          hideBookmarkForm={() => setShowModal(false)}
+        />
       )}
     </div>
   );

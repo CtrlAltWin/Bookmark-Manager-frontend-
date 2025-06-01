@@ -12,6 +12,8 @@ const Navbar = () => {
         <div className="flex space-x-10 justify-end items-center h-full text-sm">
           <Link to={"/"}>Home</Link>
           <Link to={"/dashboard"}>Dashboard</Link>
+          <Link to={"/login"}>Login</Link>
+          <Link to={"/signup"}>Signup</Link>
         </div>
       </div>
     </div>

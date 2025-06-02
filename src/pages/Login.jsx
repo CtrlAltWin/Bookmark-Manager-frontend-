@@ -13,7 +13,7 @@ const Login = () => {
           </p>
         </div>
 
-        <h2 className="font-semibold text-center mb-4">Login</h2>
+        <h2 className="font-semibold text-center mb-4">Log In</h2>
 
         <div className="mb-8">
           <label className="block mb-2 font-semibold text-sm">Email</label>
@@ -40,7 +40,7 @@ const Login = () => {
 
         <button
           type="submit"
-          className="w-full bg-black hover:bg-gray-900 font-semibold text-sm text-white py-3 rounded-lg transition"
+          className="w-full bg-violet-500 hover:bg-violet-400 font-semibold text-sm text-white py-3 rounded-lg transition"
         >
           Log In
         </button>

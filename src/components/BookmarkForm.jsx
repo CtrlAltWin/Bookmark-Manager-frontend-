@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const BookmarkForm = ({ onClose, onSave }) => {
+const BookmarkForm = ({ hideBookmarkForm, onSave }) => {
   const [formData, setFormData] = useState();
 
   const handleSubmit = (e) => {
@@ -8,6 +8,10 @@ const BookmarkForm = ({ onClose, onSave }) => {
     onSave({ title, url });
     onClose();
   };
+
+
+
+  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -93,7 +97,7 @@ const BookmarkForm = ({ onClose, onSave }) => {
       <div className="flex justify-end gap-3 text-sm pt-2 my-2">
         <button
           type="button"
-          onClick={onClose}
+          onClick={hideBookmarkForm}
           className="px-6 py-2 rounded-lg border border-gray-300 hover:bg-gray-100"
         >
           Cancel

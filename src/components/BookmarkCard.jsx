@@ -1,5 +1,6 @@
 import React from "react";
 import Tag from "./Tag";
+
 const BookmarkCard = ({ bookmark }) => {
   return (
     <div className="bg-white p-6 border border-gray-200 rounded-lg space-y-3 hover:shadow-lg duration-200 ease-in">
@@ -9,8 +10,8 @@ const BookmarkCard = ({ bookmark }) => {
         {bookmark.description}
       </p>
       <div className="flex flex-wrap gap-2">
-        {bookmark.tags.map((tag) => (
-          <div className="px-2 py-[2px] text-xs font-semibold border rounded-full text-violet-500 bg-violet-200">
+        {bookmark.tags.map((tag, index) => (
+          <div key={index} className="px-2 py-[2px] text-xs font-semibold border rounded-full text-violet-500 bg-violet-200">
             {tag}
           </div>
         ))}
@@ -20,7 +21,10 @@ const BookmarkCard = ({ bookmark }) => {
           {bookmark.category}
         </p>
         <div className="flex gap-4">
-          <button className="text-gray-500 text-sm px-2 py-1 font-bold border border-gray-300 rounded-md">
+          <button
+            className="text-gray-500 text-sm px-2 py-1 font-bold border border-gray-300 rounded-md"
+            onClick={() => window.open(bookmark.url, "_blank")}
+          >
             visit
           </button>
           <button className="text-gray-500 text-sm px-2 py-1 font-bold border border-gray-300 rounded-md">

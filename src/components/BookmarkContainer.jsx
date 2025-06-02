@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BookmarkCard from "./BookmarkCard";
 
 const BookmarkContainer = ({ showBookmarkForm }) => {
@@ -66,8 +66,9 @@ const BookmarkContainer = ({ showBookmarkForm }) => {
       tags: ["notes", "tasks", "planning"],
     },
   ]);
+  
   return (
-    <div className="px-4">
+    <div className="lg:px-4">
       {!bookmarks.length ? (
         <div className="flex flex-col h-full justify-center items-center space-y-2">
           <h3 className="font-semibold text-lg">No bookmarks found</h3>
@@ -83,8 +84,8 @@ const BookmarkContainer = ({ showBookmarkForm }) => {
         </div>
       ) : (
         <div className="h-full grid grid-cols-1 md:grid-cols-2 space-x-4 space-y-4">
-          {bookmarks.map((bookmark) => {
-            return <BookmarkCard bookmark={bookmark} />;
+          {bookmarks.map((bookmark, index) => {
+            return <BookmarkCard key={index} bookmark={bookmark} />;
           })}
         </div>
       )}

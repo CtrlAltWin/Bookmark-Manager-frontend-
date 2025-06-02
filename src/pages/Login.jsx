@@ -1,9 +1,32 @@
+import axios from "axios";
 import React from "react";
-
+import { useState } from "react";
+const baseURL = import.meta.env.VITE_API_URL;
 const Login = () => {
+  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const data = await axios.post(`${baseURL}/auth/login`, formData, {
+        withCredentials: true,
+      });
+      console.log(data);
+    } catch (err) {
+      setError(err.response.data.error);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center mt-1 min-h-[calc(100vh-64px)] bg-gray-50 w-full">
-      <form className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
+      >
         <div className="mb-4 py-4 border-b border-gray-200">
           <h1 className="text-xl font-bold text-center mb-1">
             Welcome to BookmarkHub
@@ -20,6 +43,10 @@ const Login = () => {
           <input
             type="email"
             placeholder="Enter your email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-offset-4"
             required
           />
@@ -30,13 +57,16 @@ const Login = () => {
           <input
             type="password"
             placeholder="Enter your password"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-offset-4"
             required
           />
         </div>
 
-        {/* Replace the line below with conditional logic if needed */}
-        <p className="px-1 text-red-600 mb-8">This is for error message</p>
+        {error && <p className="px-1 text-red-600 mb-8">{error}</p>}
 
         <button
           type="submit"

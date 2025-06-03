@@ -1,4 +1,4 @@
-const Modal = ({ Children, hideBookmarkForm }) => {
+const Modal = ({ Children, hideBookmarkForm, onSave }) => {
   return (
     <div className="fixed z-10 inset-0 flex items-center justify-center">
       <div className="absolute inset-0 bg-black opacity-80 border border-white" />
@@ -9,7 +9,7 @@ const Modal = ({ Children, hideBookmarkForm }) => {
         >
           ✕
         </button>
-        <Children hideBookmarkForm={hideBookmarkForm} />
+        <Children hideBookmarkForm={hideBookmarkForm} onSave={onSave} />
       </div>
     </div>
   );

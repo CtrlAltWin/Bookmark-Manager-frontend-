@@ -1,12 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FilterCardA from "../components/FilterCardA";
 import FilterCardB from "../components/FilterCardB";
 import BookmarkContainer from "../components/BookmarkContainer";
 import Modal from "../components/Modal";
 import BookmarkForm from "../components/BookmarkForm";
+import toast from "react-hot-toast";
+import axios from "axios";
+const baseURL = import.meta.env.VITE_API_URL;
 
 const Dashboard = () => {
+  const [bookmarks, setBookmarks] = useState([]);
   const [showModal, setShowModal] = useState(false);
+
+  const handleAddBookmark = async (bookmark) => {
+    try {
+      await axios.post(`${baseURL}/bookmark`, bookmark, {
+        withCredentials: true,
+      });
+      setBookmarks((bookmarks) => [...bookmarks, bookmark]);
+      toast.success("Bookmark saved successfully!");
+    } catch (err) {
+      toast.error("Error saving the bookmark");
+      console.log(err);
+    }
+  };
+  const fetchBookmarks = async () => {
+    try {
+      const res = await axios.get(`${baseURL}/bookmark`, {
+        withCredentials: true,
+      });
+      setBookmarks(res.data);
+    } catch (err) {
+      toast.error("error fetching bookmarks");
+    }
+  };
+
+  useEffect(() => {
+    fetchBookmarks();
+  }, [bookmarks]);
+
   return (
     <div className="bg-gray-50 mt-1 min-h-[calc(100vh-64px)] px-4">
       <div className="pt-9 space-y-2 max-w-[1370px] mx-auto">
@@ -51,13 +83,17 @@ const Dashboard = () => {
           />
         </div>
 
-        <BookmarkContainer showBookmarkForm={() => setShowModal(true)} />
+        <BookmarkContainer
+          showBookmarkForm={() => setShowModal(true)}
+          bookmarks={bookmarks}
+        />
       </div>
 
       {showModal && (
         <Modal
           Children={BookmarkForm}
           hideBookmarkForm={() => setShowModal(false)}
+          onSave={handleAddBookmark}
         />
       )}
     </div>

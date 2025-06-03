@@ -1,8 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 const baseURL = import.meta.env.VITE_API_URL;
 const Signup = () => {
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -10,13 +14,19 @@ const Signup = () => {
   });
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
+      setError("")
+      setIsLoading(true);
       const data = await axios.post(`${baseURL}/auth/signup`, formData, {
         withCredentials: true,
       });
+      toast.success("Signup successful!");
     } catch (err) {
-      setError(err.response.data.error);
+      toast.error("Signup failed!");
+      setError(err.response?.data?.error || "Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -24,7 +34,7 @@ const Signup = () => {
     <div className="flex items-center justify-center mt-1 min-h-[calc(100vh-64px)] bg-gray-50 w-full">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
+        className="bg-white p-8 sm:rounded-lg shadow-md w-full max-w-md"
       >
         <div className="mb-4 py-4 border-b border-gray-200">
           <h1 className="text-xl font-bold text-center mb-1">
@@ -65,7 +75,7 @@ const Signup = () => {
           />
         </div>
 
-        <div className="mb-6">
+        <div className="mb-8">
           <label className="block mb-2 font-semibold text-sm">Password</label>
           <input
             type="password"
@@ -79,14 +89,21 @@ const Signup = () => {
           />
         </div>
 
-        {error && <p className="px-1 text-red-600 mb-6">{error}</p>}
+        {error && <p className="px-1 mb-2 text-red-600">{error}</p>}
 
-        <button
-          type="submit"
-          className="w-full bg-violet-500 hover:bg-violet-400 font-semibold text-sm text-white py-3 rounded-lg transition"
-        >
-          Sign Up
-        </button>
+        <div className="mb-6">
+          <button
+            type="submit"
+            className="w-full mb-6 bg-violet-500 hover:bg-violet-400 font-semibold text-sm text-white py-3 rounded-lg transition"
+          >
+            Sign Up
+          </button>
+          {isLoading && <Spinner />}
+        </div>
+
+        <p className="text-center text-gray-700">
+          Already registered? <Link to={"/login"}>Login</Link>
+        </p>
       </form>
     </div>
   );

@@ -1,17 +1,53 @@
 import React, { useState } from "react";
+import Spinner from "./Spinner";
 
 const BookmarkForm = ({ hideBookmarkForm, onSave }) => {
-  const [formData, setFormData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    url: "",
+    description: "",
+    tags: [],
+    category: "",
+    newTag: "",
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave({ title, url });
-    onClose();
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
   };
 
+  const handleAddTag = (e) => {
+    e.preventDefault();
+    if (
+      formData.newTag.trim() &&
+      !formData.tags.includes(formData.newTag.trim())
+    ) {
+      setFormData((prev) => ({
+        ...prev,
+        tags: [...prev.tags, prev.newTag.trim()],
+        newTag: "",
+      }));
+    }
+  };
 
+  const handleRemoveTag = (tagToRemove) => {
+    setFormData((prev) => ({
+      ...prev,
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
+    }));
+  };
 
-  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { newTag, ...dataToSave } = formData;
+    setIsLoading(true);
+    await onSave(dataToSave);
+    setIsLoading(false);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -23,6 +59,8 @@ const BookmarkForm = ({ hideBookmarkForm, onSave }) => {
         <input
           type="text"
           id="title"
+          value={formData.title}
+          onChange={handleChange}
           placeholder="Bookmark title"
           required
           className="w-full border border-gray-300 my-2 px-4 py-2 rounded-lg outline-offset-4 text-sm"
@@ -36,6 +74,8 @@ const BookmarkForm = ({ hideBookmarkForm, onSave }) => {
         <input
           type="url"
           id="url"
+          value={formData.url}
+          onChange={handleChange}
           placeholder="https://example.com"
           required
           className="w-full border border-gray-300 my-2 px-4 py-2 rounded-lg outline-offset-4 text-sm"
@@ -47,41 +87,64 @@ const BookmarkForm = ({ hideBookmarkForm, onSave }) => {
           Description
         </label>
         <textarea
-          type="text"
           id="description"
+          value={formData.description}
+          onChange={handleChange}
           placeholder="Add a short description (optional)"
-          required
           className="w-full border border-gray-300 my-2 px-4 py-2 rounded-lg outline-offset-4 text-sm"
         />
       </div>
 
       <div className="mb-2">
-        <label htmlFor="tags" className="font-semibold text-sm">
+        <label htmlFor="newTag" className="font-semibold text-sm">
           Tags
-        </label>{" "}
+        </label>
         <div className="grid grid-cols-[10fr_2fr] gap-2 my-2">
           <input
-            id="tags"
+            id="newTag"
+            value={formData.newTag}
+            onChange={handleChange}
             placeholder="Add a tag"
-            required
             className="w-full border border-gray-300 px-4 py-2 rounded-lg outline-offset-4 text-sm"
           />
-          <button className="rounded-lg text-white text-sm bg-gray-900 hover:bg-gray-800 duration-200 ease-in">
+          <button
+            onClick={handleAddTag}
+            className="rounded-lg text-white text-sm bg-gray-900 hover:bg-gray-800 duration-200 ease-in"
+          >
             Add
           </button>
         </div>
+
+        {/* Display added tags */}
+        {formData.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-2">
+            {formData.tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center bg-gray-100 rounded-full px-3 py-1 text-sm"
+              >
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(tag)}
+                  className="ml-1 text-gray-500 hover:text-gray-700"
+                >
+                  x
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="mb-2">
-        <label htmlFor="Category" className="font-semibold text-sm">
+        <label htmlFor="category" className="font-semibold text-sm">
           Category
         </label>
         <select
           id="category"
-          // value={formData.category}
-          // onChange={(e) =>
-          //   setFormData({ ...formData, category: e.target.value })
-          // }
+          value={formData.category}
+          onChange={handleChange}
           required
           className="w-full border border-gray-300 my-2 px-4 py-2 rounded-lg outline-offset-4 text-sm"
         >
@@ -94,7 +157,7 @@ const BookmarkForm = ({ hideBookmarkForm, onSave }) => {
         </select>
       </div>
 
-      <div className="flex justify-end gap-3 text-sm pt-2 my-2">
+      <div className="flex justify-end gap-3 text-sm py-2 my-2">
         <button
           type="button"
           onClick={hideBookmarkForm}
@@ -109,7 +172,9 @@ const BookmarkForm = ({ hideBookmarkForm, onSave }) => {
           Save
         </button>
       </div>
+      <div className="my-4">{isLoading && <Spinner />}</div>
     </form>
   );
 };
+
 export default BookmarkForm;

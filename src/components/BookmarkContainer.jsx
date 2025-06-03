@@ -1,72 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import BookmarkCard from "./BookmarkCard";
 
-const BookmarkContainer = ({ showBookmarkForm }) => {
-  const [bookmarks, setBookmarks] = useState([
-    {
-      title: "MDN Web Docs",
-      url: "https://developer.mozilla.org/",
-      description:
-        "Comprehensive resource for web developers, with docs on HTML, CSS, and JavaScript.",
-      category: "Learning",
-      tags: ["docs", "html", "css", "javascript"],
-    },
-    {
-      title: "GitHub",
-      url: "https://github.com/",
-      description:
-        "Platform for hosting and collaborating on code repositories.",
-      category: "Work",
-      tags: ["git", "repos", "open-source"],
-    },
-    {
-      title: "YouTube",
-      url: "https://www.youtube.com/",
-      description:
-        "Video platform with content on everything from tutorials to entertainment.",
-      category: "Entertainment",
-      tags: ["video", "tutorial", "fun"],
-    },
-    {
-      title: "LeetCode",
-      url: "https://leetcode.com/",
-      description:
-        "Practice coding problems and prepare for technical interviews.",
-      category: "Learning",
-      tags: ["coding", "practice", "interview"],
-    },
-    {
-      title: "Hacker News",
-      url: "https://news.ycombinator.com/",
-      description:
-        "Tech news aggregator with articles on startups, programming, and more.",
-      category: "Learning",
-      tags: ["news", "tech", "startups"],
-    },
-    {
-      title: "Figma",
-      url: "https://figma.com/",
-      description: "Collaborative interface design tool for teams.",
-      category: "Work",
-      tags: ["design", "ui", "collaboration"],
-    },
-    {
-      title: "Reddit",
-      url: "https://www.reddit.com/",
-      description: "Online community and discussion site for countless topics.",
-      category: "Entertainment",
-      tags: ["community", "memes", "discussion"],
-    },
-    {
-      title: "Notion",
-      url: "https://www.notion.so/",
-      description:
-        "All-in-one workspace for notes, tasks, databases, and collaboration.",
-      category: "Productivity",
-      tags: ["notes", "tasks", "planning"],
-    },
-  ]);
-  
+const BookmarkContainer = ({ showBookmarkForm, bookmarks }) => {
   return (
     <div className="lg:px-4">
       {!bookmarks.length ? (

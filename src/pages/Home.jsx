@@ -1,5 +1,5 @@
 import React from "react";
-import FeatureCard from "../components/featureCard";
+import FeatureCard from "../components/FeatureCard";
 import Tag from "../components/Tag";
 import CardB from "../components/CardB";
 import Logo from "../components/Logo";

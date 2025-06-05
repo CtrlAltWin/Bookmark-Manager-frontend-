@@ -3,7 +3,9 @@ import FeatureCard from "../components/featureCard";
 import Tag from "../components/Tag";
 import CardB from "../components/CardB";
 import Logo from "../components/Logo";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="bg-gradient-to-b from-white to-violet-200 px-2">
@@ -15,7 +17,10 @@ const Home = () => {
             BookmarkHub helps you save and organize your favorite websites,
             articles, and resources all in one place.
           </p>
-          <button className="text-lg font-semibold text-white bg-violet-400 hover:scale-[1.02] duration-250 ease-in active:scale-[1] px-10 py-[9px] rounded-sm mt-8 mb-16">
+          <button
+            className="text-lg font-semibold text-white bg-violet-400 hover:scale-[1.02] duration-250 ease-in active:scale-[1] px-10 py-[9px] rounded-sm mt-8 mb-16"
+            onClick={() => navigate("/login")}
+          >
             Get Started
           </button>
         </div>
@@ -87,7 +92,10 @@ const Home = () => {
             Join thousands of users who have simplified their web browsing
             experience with BookmarkHub.
           </p>
-          <button className="font-semibold bg-white text-violet-400 hover:scale-[1.02] duration-250 ease-in active:scale-[1] px-10 py-[9px] rounded-md mt-8">
+          <button
+            className="font-semibold bg-white text-violet-400 hover:scale-[1.02] duration-250 ease-in active:scale-[1] px-10 py-[9px] rounded-md mt-8"
+            onClick={() => navigate("/login")}
+          >
             Get Started Now
           </button>
         </div>

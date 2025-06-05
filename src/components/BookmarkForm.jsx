@@ -47,6 +47,7 @@ const BookmarkForm = ({ hideBookmarkForm, onSave }) => {
     setIsLoading(true);
     await onSave(dataToSave);
     setIsLoading(false);
+    hideBookmarkForm();
   };
 
   return (

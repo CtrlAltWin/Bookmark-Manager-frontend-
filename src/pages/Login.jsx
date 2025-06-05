@@ -1,10 +1,12 @@
 import axios from "axios";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import AuthContext from "../../utils/AuthContext";
 const baseURL = import.meta.env.VITE_API_URL;
+
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -12,24 +14,31 @@ const Login = () => {
     email: "",
     password: "",
   });
-
+  const { loggedInUser, setLoggedInUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setError("");
       setIsLoading(true);
-      const data = await axios.post(`${baseURL}/auth/login`, formData, {
+      const res = await axios.post(`${baseURL}/auth/login`, formData, {
         withCredentials: true,
       });
+      setLoggedInUser(res.data?.user);
+      navigate("/dashboard");
       toast.success("Login successful!");
     } catch (err) {
       toast.error("Login Failed");
-      setError(err.response.data.error);
+      setError(err.response?.data?.error);
     } finally {
       setIsLoading(false);
     }
   };
-
+  useEffect(() => {
+    if (loggedInUser) {
+      navigate("/dashboard");
+    }
+  }, [loggedInUser]);
   return (
     <div className="flex items-center justify-center mt-1 min-h-[calc(100vh-64px)] bg-gray-50 w-full">
       <form

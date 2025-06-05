@@ -1,7 +1,7 @@
 import React from "react";
 import Tag from "./Tag";
 
-const BookmarkCard = ({ bookmark }) => {
+const BookmarkCard = ({ bookmark, setToBeDeleted }) => {
   return (
     <div className="bg-white p-6 border border-gray-200 rounded-lg space-y-3 hover:shadow-lg duration-200 ease-in">
       <h2 className="font-semibold overflow-clip">{bookmark.title}</h2>
@@ -11,7 +11,10 @@ const BookmarkCard = ({ bookmark }) => {
       </p>
       <div className="flex flex-wrap gap-2">
         {bookmark.tags.map((tag, index) => (
-          <div key={index} className="px-2 py-[2px] text-xs font-semibold border rounded-full text-violet-500 bg-violet-200">
+          <div
+            key={index}
+            className="px-2 py-[2px] text-xs font-semibold border rounded-full text-violet-500 bg-violet-200"
+          >
             {tag}
           </div>
         ))}
@@ -27,7 +30,10 @@ const BookmarkCard = ({ bookmark }) => {
           >
             visit
           </button>
-          <button className="text-gray-500 text-sm px-2 py-1 font-bold border border-gray-300 rounded-md">
+          <button
+            className="text-gray-500 text-sm px-2 py-1 font-bold border border-gray-300 rounded-md"
+            onClick={() => setToBeDeleted(bookmark._id)}
+          >
             delete
           </button>
         </div>

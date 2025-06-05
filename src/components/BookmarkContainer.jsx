@@ -1,7 +1,7 @@
 import React from "react";
 import BookmarkCard from "./BookmarkCard";
 
-const BookmarkContainer = ({ showBookmarkForm, bookmarks }) => {
+const BookmarkContainer = ({ showBookmarkForm, bookmarks, setToBeDeleted }) => {
   return (
     <div className="lg:px-4">
       {!bookmarks.length ? (
@@ -18,9 +18,9 @@ const BookmarkContainer = ({ showBookmarkForm, bookmarks }) => {
           </button>
         </div>
       ) : (
-        <div className="h-full grid grid-cols-1 md:grid-cols-2 space-x-4 space-y-4">
+        <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-4">
           {bookmarks.map((bookmark, index) => {
-            return <BookmarkCard key={index} bookmark={bookmark} />;
+            return <BookmarkCard key={index} bookmark={bookmark} setToBeDeleted={setToBeDeleted}/>;
           })}
         </div>
       )}

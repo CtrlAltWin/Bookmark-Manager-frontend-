@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import BookmarkCard from "./BookmarkCard";
 
-const BookmarkContainer = ({ showBookmarkForm, bookmarks, setToBeDeleted }) => {
+const BookmarkContainer = ({
+  showBookmarkForm,
+  bookmarks,
+  setToBeDeleted,
+  setDroppedUrl,
+  isDragging,
+  setIsDragging,
+}) => {
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    const url = e.dataTransfer.getData("text/plain");
+    if (url && url.startsWith("http")) {
+      setDroppedUrl(url);
+      showBookmarkForm();
+    }
+  };
   return (
-    <div className="lg:px-4">
+    <div
+      className={`lg:px-4 py-4 h-auto ${isDragging && "border border-dotted"}`}
+      onDrop={handleDrop}
+    >
+      <p className="p-2 bg-white text-gray-700 text-sm text-center border border-gray-200 rounded-lg mb-2">
+        Drag and drop the URL here
+      </p>
+
       {!bookmarks.length ? (
         <div className="flex flex-col h-full justify-center items-center space-y-2">
           <h3 className="font-semibold text-lg">No bookmarks found</h3>
@@ -18,9 +42,15 @@ const BookmarkContainer = ({ showBookmarkForm, bookmarks, setToBeDeleted }) => {
           </button>
         </div>
       ) : (
-        <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="min-h-72 grid grid-cols-1 md:grid-cols-2 gap-4">
           {bookmarks.map((bookmark, index) => {
-            return <BookmarkCard key={index} bookmark={bookmark} setToBeDeleted={setToBeDeleted}/>;
+            return (
+              <BookmarkCard
+                key={index}
+                bookmark={bookmark}
+                setToBeDeleted={setToBeDeleted}
+              />
+            );
           })}
         </div>
       )}

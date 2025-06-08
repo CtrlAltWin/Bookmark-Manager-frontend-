@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Spinner from "./Spinner";
 
-const BookmarkForm = ({ hideBookmarkForm, onSave }) => {
+const BookmarkForm = ({ hideBookmarkForm, onSave, droppedUrl }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
-    url: "",
+    url: droppedUrl,
     description: "",
     tags: [],
     category: "",

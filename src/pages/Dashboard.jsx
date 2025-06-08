@@ -13,6 +13,8 @@ const Dashboard = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [toBeDeleted, setToBeDeleted] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [droppedUrl, setDroppedUrl] = useState("");
   const [filter, setFilter] = useState({
     search: "",
     tags: [],
@@ -89,7 +91,19 @@ const Dashboard = () => {
   }, [filter]);
 
   return (
-    <div className="bg-gray-50 mt-1 min-h-[calc(100vh-64px)] px-4">
+    <div
+      className="bg-gray-50 mt-1 min-h-[calc(100vh-64px)] px-4"
+      onDragOver={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      onDragEnterCapture={() => setIsDragging(true)}
+      onDrop={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragging(false);
+      }}
+    >
       <div className="pt-9 space-y-2 max-w-[1370px] mx-auto">
         <h1 className="font-bold text-3xl">My Bookmarks</h1>
         <p className="text-gray-700">Manage and organize your favorite links</p>
@@ -140,8 +154,11 @@ const Dashboard = () => {
 
         <BookmarkContainer
           showBookmarkForm={() => setShowModal(true)}
+          setDroppedUrl={setDroppedUrl}
           bookmarks={bookmarks}
           setToBeDeleted={setToBeDeleted}
+          isDragging={isDragging}
+          setIsDragging={setIsDragging}
         />
       </div>
 
@@ -150,6 +167,8 @@ const Dashboard = () => {
           Children={BookmarkForm}
           hideBookmarkForm={() => setShowModal(false)}
           onSave={handleAddBookmark}
+          droppedUrl={droppedUrl}
+          setDroppedUrl={setDroppedUrl}
         />
       )}
     </div>

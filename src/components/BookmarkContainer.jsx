@@ -21,7 +21,9 @@ const BookmarkContainer = ({
   };
   return (
     <div
-      className={`lg:px-4 py-4 h-auto ${isDragging && "border border-dotted"}`}
+      className={`lg:px-4 h-auto ${
+        isDragging && "py-4 border border-dashed border-gray-300 duration-300"
+      }`}
       onDrop={handleDrop}
     >
       <p className="p-2 bg-white text-gray-700 text-sm text-center border border-gray-200 rounded-lg mb-2">
